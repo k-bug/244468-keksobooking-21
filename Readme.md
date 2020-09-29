@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Kirill Bugaev](https://up.htmlacademy.ru/javascript/21/user/244468).
-* Наставник: `Неизвестно`.
+* Наставник: `Без наставника`.
 
 ---
 
