@@ -133,6 +133,7 @@ const addPhotos = function (photos, adCard) {
 };
 
 const placeHousingTitle = function (title, adCard) {
+  /* eslint no-unused-expressions: ["error", { "allowTernary": true }]*/
   checkExistence(title) ?
     adCard.querySelector(`.popup__title`).textContent = title :
     adCard.querySelector(`.popup__title`).classList.add(`hidden`);
@@ -256,4 +257,7 @@ createAds();
 document.querySelector(`.map`).classList.remove(`map--faded`);
 
 pagePins.appendChild(fragment);
-pagePins.appendChild(createAdCard(generateAdvertsArray()[0]));
+
+const map = document.querySelector(`.map`);
+const mapFiltersContainer = document.querySelector(`.map__filters-container`);
+map.insertBefore(createAdCard(generateAdvertsArray()[0]), mapFiltersContainer);
