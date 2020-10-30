@@ -6,4 +6,3 @@ env:
 
 extends:
   "htmlacademy/es5.5"
-
