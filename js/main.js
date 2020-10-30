@@ -110,10 +110,6 @@ const createPin = function (adPin) {
   return pin;
 };
 
-const checkExistence = function (value) {
-  return !!value;
-};
-
 const addFeatures = function (features, adCard) {
   for (let i = 0; i < features.length; i++) {
     const feature = document.createElement(`li`);
@@ -133,36 +129,42 @@ const addPhotos = function (photos, adCard) {
 };
 
 const placeHousingTitle = function (title, adCard) {
-  checkExistence(title) ?
-    adCard.querySelector(`.popup__title`).textContent = title :
+  if (title) {
+    adCard.querySelector(`.popup__title`).textContent = title;
+  } else {
     adCard.querySelector(`.popup__title`).classList.add(`hidden`);
+  }
 };
 
 const placeHousingAddres = function (address, adCard) {
-  checkExistence(address) ?
-    adCard.querySelector(`.popup__text--address`).textContent = address :
+  if (address) {
+    adCard.querySelector(`.popup__text--address`).textContent = address;
+  } else {
     adCard.querySelector(`.popup__text--address`).classList.add(`hidden`);
+  }
 };
 
 const placeHousingPrice = function (price, adCard) {
-  checkExistence(price) ?
-    adCard.querySelector(`.popup__text--price`).textContent = price + `₽/ночь` :
+  if (price) {
+    adCard.querySelector(`.popup__text--price`).textContent = price + `₽/ночь`;
+  } else {
     adCard.querySelector(`.popup__text--price`).classList.add(`hidden`);
+  }
 };
 
 const placeHousingCapacity = function (rooms, guests, adCard) {
   switch (true) {
-    case checkExistence(rooms) !== false && checkExistence(guests) !== false:
+    case !!rooms !== false && !!guests !== false:
       adCard.querySelector(`.popup__text--capacity`).textContent = rooms + ` комнаты для ` +
         guests + ` гостей`;
       break;
 
-    case checkExistence(rooms) !== true && checkExistence(guests) !== false:
+    case !!rooms !== true && !!guests !== false:
       adCard.querySelector(`.popup__text--capacity`).textContent = `Для ` +
         guests + ` гостей`;
       break;
 
-    case checkExistence(rooms) !== false && checkExistence(guests) !== true:
+    case !!rooms !== false && !!guests !== true:
       adCard.querySelector(`.popup__text--capacity`).textContent = rooms + ` комнаты`;
       break;
 
@@ -173,16 +175,16 @@ const placeHousingCapacity = function (rooms, guests, adCard) {
 
 const placeHousingTimes = function (checkin, checkout, adCard) {
   switch (true) {
-    case checkExistence(checkin) !== false && checkExistence(checkout) !== false:
+    case !!checkin !== false && !!checkout !== false:
       adCard.querySelector(`.popup__text--time`).textContent = `Заезд после ` + checkin +
         `, выезд до ` + checkout;
       break;
 
-    case checkExistence(checkin) !== true && checkExistence(checkout) !== false:
+    case !!checkin !== true && !!checkout !== false:
       adCard.querySelector(`.popup__text--time`).textContent = `Выезд до ` + checkout;
       break;
 
-    case checkExistence(checkin) !== false && checkExistence(checkout) !== true:
+    case !!checkin !== false && !!checkout !== true:
       adCard.querySelector(`.popup__text--time`).textContent = `Заезд после ` + checkin;
       break;
 
@@ -192,9 +194,11 @@ const placeHousingTimes = function (checkin, checkout, adCard) {
 };
 
 const placeHousingType = function (type, adCard) {
-  checkExistence(type) ?
-    adCard.querySelector(`.popup__type`).textContent = type :
+  if (type) {
+    adCard.querySelector(`.popup__type`).textContent = type;
+  } else {
     adCard.querySelector(`.popup__type`).classList.add(`hidden`);
+  }
 };
 
 const placeHousingFeatures = function (features, adCard) {
@@ -204,28 +208,36 @@ const placeHousingFeatures = function (features, adCard) {
     adCardFeatures[i].remove();
   }
 
-  checkExistence(features) ?
-    addFeatures(features, adCard) :
+  if (features) {
+    addFeatures(features, adCard);
+  } else {
     adCard.querySelector(`.popup__type`).classList.add(`hidden`);
+  }
 };
 
 const placeHousingDescription = function (description, adCard) {
-  checkExistence(description) ?
-    adCard.querySelector(`.popup__description`).textContent = description :
+  if (description) {
+    adCard.querySelector(`.popup__description`).textContent = description;
+  } else {
     adCard.querySelector(`.popup__description`).classList.add(`hidden`);
+  }
 };
 
 const placeHousingPhotos = function (photos, adCard) {
-  checkExistence(photos) ?
-    addPhotos(photos, adCard) :
+  if (photos) {
+    addPhotos(photos, adCard);
+  } else {
     adCard.querySelector(`.popup__type`).classList.add(`hidden`);
+  }
   adCard.querySelector(`.popup__photos`).querySelector(`img`).remove();
 };
 
 const placeAuthorAvatar = function (avatar, adCard) {
-  checkExistence(avatar) ?
-    adCard.querySelector(`.popup__avatar`).src = avatar :
+  if (avatar) {
+    adCard.querySelector(`.popup__avatar`).src = avatar;
+  } else {
     adCard.querySelector(`.popup__type`).classList.add(`hidden`);
+  }
 };
 
 const createAdCard = function (ad) {
@@ -256,4 +268,7 @@ createAds();
 document.querySelector(`.map`).classList.remove(`map--faded`);
 
 pagePins.appendChild(fragment);
-pagePins.appendChild(createAdCard(generateAdvertsArray()[0]));
+
+const map = document.querySelector(`.map`);
+const mapFiltersContainer = document.querySelector(`.map__filters-container`);
+map.insertBefore(createAdCard(generateAdvertsArray()[0]), mapFiltersContainer);
